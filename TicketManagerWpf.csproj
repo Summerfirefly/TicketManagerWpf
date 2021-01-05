@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net462</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Version>1.0</Version>
+    <InformationalVersion>1.0.480.962-alpha</InformationalVersion>
+  </PropertyGroup>
+
+</Project>
