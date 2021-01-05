@@ -4,8 +4,6 @@
 
 ## Dev environment
 
----
-
 Created by .NET 5.0 SDK
 
 Build for .NET Framework 4.6.2
