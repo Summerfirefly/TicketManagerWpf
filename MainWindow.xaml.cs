@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,18 @@ namespace TicketManagerWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string AppPath
+        {
+            get => System.AppDomain.CurrentDomain.BaseDirectory;
+        }
+
+        public string DataDirPath
+        {
+            get => System.IO.Path.Combine(this.AppPath, "data");
+        }
+
+        private string liveInfoFilePath;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,38 +50,21 @@ namespace TicketManagerWpf
             tboxNormal.LostKeyboardFocus += tboxLostKeyboardFocus;
         }
 
-        private void listSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private void InitializeData()
         {
-            if (lbTicketList.SelectedItem != null)
+            liveInfoFilePath = System.IO.Path.Combine(this.DataDirPath, "live-info.json");
+
+            if (!Directory.Exists(this.DataDirPath))
             {
-                TicketInfo info = lbTicketList.SelectedItem as TicketInfo;
-                tboxOrderId.Text = info.Id;
-                tboxVip.Text = info.VipCount.ToString();
-                tboxNormal.Text = info.NormalCount.ToString();
+                Directory.CreateDirectory(this.DataDirPath);
             }
-        }
 
-        private void tboxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args)
-        {
-            if (lbTicketList.SelectedItem != null)
+            if (!File.Exists(liveInfoFilePath))
             {
-                TextBox tbox = sender as TextBox;
-                TicketInfo info = lbTicketList.SelectedItem as TicketInfo;
-
-                switch (tbox.Name)
-                {
-                    case "tboxOrderId":
-                        info.Id = tbox.Text;
-                        break;
-                    case "tboxVip":
-                        info.VipCount = Int32.Parse(tbox.Text);
-                        break;
-                    case "tboxNormal":
-                        info.NormalCount = Int32.Parse(tbox.Text);
-                        break;
-                }
-
-                lbTicketList.Items.Refresh();
+                StreamWriter liveInfoWriter = new StreamWriter(liveInfoFilePath, false);
+                liveInfoWriter.WriteLine("[]");
+                liveInfoWriter.Flush();
+                liveInfoWriter.Close();
             }
         }
     }
