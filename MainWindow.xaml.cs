@@ -43,11 +43,8 @@ namespace TicketManagerWpf
             list.Add(new TicketInfo() { Id = "12345677", VipCount = 3, NormalCount = 0 });
 
             lbTicketList.ItemsSource = list;
-            lbTicketList.SelectionChanged += listSelectionChanged;
-
-            tboxOrderId.LostKeyboardFocus += tboxLostKeyboardFocus;
-            tboxVip.LostKeyboardFocus += tboxLostKeyboardFocus;
-            tboxNormal.LostKeyboardFocus += tboxLostKeyboardFocus;
+            lbTicketList.BorderThickness = new Thickness(0.0);
+            lbTicketList.MouseDoubleClick += ticketDoubleClick;
         }
 
         private void InitializeData()
@@ -67,6 +64,12 @@ namespace TicketManagerWpf
                 liveInfoWriter.Close();
             }
         }
+    }
+
+    public class LiveInfo
+    {
+        public string Name { get; set; }
+        public DateTime Time { get; set; }
     }
 
     public class TicketInfo

@@ -1,43 +1,25 @@
-using System;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace TicketManagerWpf
 {
     public partial class MainWindow
     {
-        private void listSelectionChanged(object sender, SelectionChangedEventArgs args)
+        /// <summary>
+        /// Used on ListBox, show dialog to edit selected item
+        /// </summary>
+        private void ticketDoubleClick(object sender, RoutedEventArgs args)
         {
-            if (lbTicketList.SelectedItem != null)
+            ListBox list = sender as ListBox;
+            if (list != null && list.SelectedItem != null)
             {
-                TicketInfo info = lbTicketList.SelectedItem as TicketInfo;
-                tboxOrderId.Text = info.Id;
-                tboxVip.Text = info.VipCount.ToString();
-                tboxNormal.Text = info.NormalCount.ToString();
-            }
-        }
+                TicketInfo ticket = list.SelectedItem as TicketInfo;
+                TicketEditor editor = new TicketEditor(ticket);
 
-        private void tboxLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args)
-        {
-            if (lbTicketList.SelectedItem != null)
-            {
-                TextBox tbox = sender as TextBox;
-                TicketInfo info = lbTicketList.SelectedItem as TicketInfo;
-
-                switch (tbox.Name)
-                {
-                    case "tboxOrderId":
-                        info.Id = tbox.Text;
-                        break;
-                    case "tboxVip":
-                        info.VipCount = Int32.Parse(tbox.Text);
-                        break;
-                    case "tboxNormal":
-                        info.NormalCount = Int32.Parse(tbox.Text);
-                        break;
-                }
-
-                lbTicketList.Items.Refresh();
+                editor.Owner = this;
+                editor.ShowInTaskbar = false;
+                editor.ShowDialog();
+                list.Items.Refresh();
             }
         }
     }
