@@ -31,11 +31,10 @@ namespace TicketManagerWpf
             get => System.IO.Path.Combine(this.AppPath, "data");
         }
 
-        private string liveInfoFilePath;
-
         public MainWindow()
         {
             InitializeComponent();
+            InitializeData();
 
             List<TicketInfo> list = new List<TicketInfo>();
             list.Add(new TicketInfo() { Id = "12345678", VipCount = 2, NormalCount = 1 });
@@ -49,27 +48,19 @@ namespace TicketManagerWpf
 
         private void InitializeData()
         {
-            liveInfoFilePath = System.IO.Path.Combine(this.DataDirPath, "live-info.json");
+            DirectoryInfo dataDir;
 
             if (!Directory.Exists(this.DataDirPath))
             {
-                Directory.CreateDirectory(this.DataDirPath);
+                dataDir = Directory.CreateDirectory(this.DataDirPath);
             }
-
-            if (!File.Exists(liveInfoFilePath))
+            else
             {
-                StreamWriter liveInfoWriter = new StreamWriter(liveInfoFilePath, false);
-                liveInfoWriter.WriteLine("[]");
-                liveInfoWriter.Flush();
-                liveInfoWriter.Close();
+                dataDir = new DirectoryInfo(this.DataDirPath);
             }
-        }
-    }
 
-    public class LiveInfo
-    {
-        public string Name { get; set; }
-        public DateTime Time { get; set; }
+            liveSelector.ItemsSource = dataDir.GetFiles("*.json");
+        }
     }
 
     public class TicketInfo
