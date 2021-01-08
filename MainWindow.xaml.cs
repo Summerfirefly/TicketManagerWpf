@@ -41,9 +41,9 @@ namespace TicketManagerWpf
             list.Add(new TicketInfo() { Id = "12345679", VipCount = 0, NormalCount = 1 });
             list.Add(new TicketInfo() { Id = "12345677", VipCount = 3, NormalCount = 0 });
 
-            lbTicketList.ItemsSource = list;
-            lbTicketList.BorderThickness = new Thickness(0.0);
-            lbTicketList.MouseDoubleClick += ticketDoubleClick;
+            ticketList.ItemsSource = list;
+            ticketList.BorderThickness = new Thickness(0.0);
+            ticketList.MouseDoubleClick += ticketDoubleClick;
         }
 
         private void InitializeData()
