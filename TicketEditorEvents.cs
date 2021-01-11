@@ -1,13 +1,22 @@
 using System;
-using System.ComponentModel;
+using System.Windows;
 
 namespace TicketManagerWpf
 {
     public partial class TicketEditor
     {
-        private void DialogClosing(object sender, CancelEventArgs args)
+        private void ApplyChange(object sender, RoutedEventArgs args)
         {
-            this.ticketInfo.Id = editorOrderId.Text;
+            bool hasError = false;
+
+            if (editorOrderId.Text != string.Empty)
+            {
+                this.ticketInfo.Id = editorOrderId.Text;
+            }
+            else
+            {
+                hasError = true;
+            }
 
             try
             {
@@ -15,9 +24,8 @@ namespace TicketManagerWpf
             }
             catch (FormatException)
             {
-                editorVip.Foreground = System.Windows.Media.Brushes.Red;
-                args.Cancel = true;
-                return;
+                textVip.Foreground = System.Windows.Media.Brushes.Red;
+                hasError = true;
             }
 
             try
@@ -26,10 +34,19 @@ namespace TicketManagerWpf
             }
             catch (FormatException)
             {
-                editorNormal.Foreground = System.Windows.Media.Brushes.Red;
-                args.Cancel = true;
-                return;
+                textNormal.Foreground = System.Windows.Media.Brushes.Red;
+                hasError = true;
             }
+
+            if (!hasError)
+            {
+                this.Close();
+            }
+        }
+
+        private void CancelEdit(object sender, RoutedEventArgs args)
+        {
+            this.Close();
         }
     }
 }

@@ -18,7 +18,8 @@ namespace TicketManagerWpf
             editorVip.Text = ticket.VipCount.ToString();
             editorNormal.Text = ticket.NormalCount.ToString();
 
-            this.Closing += DialogClosing;
+            editorApply.Click += ApplyChange;
+            editorCancel.Click += CancelEdit;
         }
     }
 }
