@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,14 +31,10 @@ namespace TicketManagerWpf
             InitializeComponent();
             InitializeData();
 
-            List<TicketInfo> list = new List<TicketInfo>();
-            list.Add(new TicketInfo() { Id = "12345678", VipCount = 2, NormalCount = 1 });
-            list.Add(new TicketInfo() { Id = "12345679", VipCount = 0, NormalCount = 1 });
-            list.Add(new TicketInfo() { Id = "12345677", VipCount = 3, NormalCount = 0 });
-
-            ticketList.ItemsSource = list;
             ticketList.BorderThickness = new Thickness(0.0);
+
             ticketList.MouseDoubleClick += ticketDoubleClick;
+            liveSelector.SelectionChanged += liveSelectorSelectionChange;
         }
 
         private void InitializeData()

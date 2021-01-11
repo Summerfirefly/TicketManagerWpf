@@ -5,7 +5,7 @@
     <TargetFramework>net462</TargetFramework>
     <UseWPF>true</UseWPF>
     <Version>1.0</Version>
-    <InformationalVersion>0.0.482.1043-alpha</InformationalVersion>
+    <InformationalVersion>0.0.486.895-alpha</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>

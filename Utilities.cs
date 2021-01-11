@@ -7,18 +7,18 @@ namespace TicketManagerWpf
 {
     class Utilities
     {
-        internal static async Task<T> ParseJsonFromFileAsync<T>(string path)
+        internal static async Task<TicketInfo[]> ParseTicketsFromFileAsync(string path)
         {
             StreamReader streamReader;
             try
             {
                 streamReader = new StreamReader(path);
                 string json = await streamReader.ReadToEndAsync();
-                return JsonConvert.DeserializeObject<T>(json);
+                return JsonConvert.DeserializeObject<TicketInfo[]>(json);
             }
             catch (Exception)
             {
-                return default(T);
+                return null;
             }
         }
     }
